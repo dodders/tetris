@@ -1,0 +1,25 @@
+package com.gd.tetris;
+
+import javafx.scene.layout.TilePane;
+
+public class Controller implements Runnable {
+
+	TilePane tp;
+	
+	public Controller(TilePane tp) {
+		this.tp = tp;
+	}
+	
+	@Override
+	public void run() {
+		for (int x = 0; x < 10; x++) {
+			System.out.println("x is " + x);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

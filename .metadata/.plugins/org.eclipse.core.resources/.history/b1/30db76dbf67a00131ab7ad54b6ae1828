@@ -1,0 +1,9 @@
+package com.gd.tetris.model;
+
+public class GameObject {
+	
+	private int x;
+	private int y;
+	
+	
+}

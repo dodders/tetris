@@ -1,0 +1,30 @@
+package com.gd.tetris.model;
+
+import java.util.Observable;
+
+import javafx.scene.paint.Color;
+
+public class Tile extends Observable {
+
+	private Color color = Color.AQUA;
+	public int row;
+	public int col;
+	
+	public Tile() {
+		super();
+	}
+	
+	public void setColor(Color c) {
+		color = c;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	public String toString() {
+		return "tile:" + row + ":" + col;
+	}
+}

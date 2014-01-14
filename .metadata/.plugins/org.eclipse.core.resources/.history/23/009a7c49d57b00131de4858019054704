@@ -1,0 +1,71 @@
+package com.gd.tetris;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Properties;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	Properties props = new Properties();
+	TilePane grid = new TilePane();
+	int rows;
+	int cols;
+	
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+		init();
+		primaryStage.setTitle("Tetris - JavaFX");
+		Scene scene = new Scene(grid);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	public void init() throws IOException {
+		log("starting...");
+		//Path p = Paths.get("/Users/george/github/tetris/tetris-javafx/tetris.properties");
+		Path p = FileSystems.getDefault().getPath("tetris.properties");
+		log(p.toAbsolutePath().toString());
+		InputStream is = Files.newInputStream(p, StandardOpenOption.READ);
+		props.load(is);
+		rows = Integer.parseInt(props.getProperty("height"));
+		cols = Integer.parseInt(props.getProperty(""));
+		//set up screen
+		grid.setHgap(4);
+		grid.setVgap(4);
+		grid.setPrefColumns(cols);
+		grid.setPrefRows(rows);
+		grid.setPrefTileHeight(20);
+		grid.setPrefTileWidth(20);
+
+		for (int ct = 0; ct < rows; ct++) {
+			for (int ix = 0; ix < cols; ix++) {
+				Rectangle r = new Rectangle(25,25,20,20);
+			    r.setFill(Color.BLUE);
+			    grid.getChildren().add(r);
+			}
+		}
+	}
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+	
+}

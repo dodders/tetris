@@ -1,0 +1,34 @@
+package com.gd.tetris.model;
+
+import java.util.ArrayList;
+import java.util.Observable;
+import javafx.beans.InvalidationListener;
+import javafx.scene.paint.Color;
+
+public class Tile extends Observable {
+
+	private ArrayList<InvalidationListener> al = new ArrayList<>();
+	private Color color = Color.AQUA;
+	
+	public void setColor(Color c) {
+		color = c;
+		for (InvalidationListener l : al) {
+			l.invalidated(this);
+		}
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+	
+	@Override
+	public void addListener(InvalidationListener arg0) {
+		al.add(arg0);
+	}
+
+	@Override
+	public void removeListener(InvalidationListener arg0) {
+		al.remove(arg0);
+	}
+
+}

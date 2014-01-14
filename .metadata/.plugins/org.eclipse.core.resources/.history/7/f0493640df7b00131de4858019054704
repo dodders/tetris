@@ -1,0 +1,29 @@
+package com.gd.tetris.model;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class Model {
+	
+	Color[][] tiles ;
+	int rows;
+	int cols;
+	
+	
+	public Model(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		tiles = new Color[rows][cols];
+		
+		int cells = rows * cols;
+		log("creating " + cells + " cells.");
+		for (int ct = 0; ct < cells; ct++) {
+			Rectangle r = new Rectangle(25,25,20,20);
+			r.setFill(Color.AQUA);
+			gridView.getChildren().add(r);
+		}
+		log("added " + gridView.getChildren().size() + " nodes.");
+	}
+	
+	
+}

@@ -1,0 +1,43 @@
+package com.gd.tetris;
+
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+		primaryStage.setTitle("Tetris - JavaFX");
+		TilePane tp = new TilePane();
+		tp.setHgap(4);
+		tp.setVgap(4);
+		tp.setPrefColumns(10);
+		tp.setPrefRows(40);
+		tp.setPrefTileHeight(20);
+		tp.setPrefTileWidth(20);
+		//Pane tilePane = (Pane)FXMLLoader.load(getClass().getResource("src/com/gd/tetris/view/GameGrid.fxml"));
+		
+		Rectangle r = new Rectangle(25,25,20,20);
+	    r.setFill(Color.BLUE);
+	    tp.getChildren().add(r);
+	    Rectangle r2 = new Rectangle(25,25,20,20);
+	    r2.setFill(Color.RED);
+	    tp.getChildren().add(r2);
+		
+		Scene scene = new Scene(tilePane);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+}

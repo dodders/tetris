@@ -1,0 +1,45 @@
+package com.gd.tetris;
+
+import com.gd.tetris.model.Model;
+
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class Controller implements Runnable {
+
+	TilePane view;
+	Model model;
+	Rectangle r;
+	Rectangle prev;
+	
+	public Controller(TilePane tp, Model model) {
+		this.view = tp;
+		this.model = model;
+	}
+	
+	@Override
+	public void run() {
+		for (Node n : view.getChildren()) {
+			prev = r;
+			r = (Rectangle)n;
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					if (prev != null) {
+						prev.setFill(Color.AQUA);
+					}
+					r.setFill(Color.GREEN);
+				}
+			});
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

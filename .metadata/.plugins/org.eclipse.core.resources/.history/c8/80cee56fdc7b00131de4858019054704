@@ -1,0 +1,13 @@
+package com.gd.tetris.model;
+
+public class Model {
+	
+	GameObject[][] grid;
+	int rows;
+	int cols;
+	
+	public Model(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+	}
+}

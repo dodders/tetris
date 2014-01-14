@@ -1,0 +1,30 @@
+package com.gd.tetris.model;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class Model {
+	
+	Color[][] tiles ;
+	int rows;
+	int cols;
+	
+	
+	public Model(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		tiles = new Color[rows][cols];
+		
+		log("creating " + rows * cols + " cells.");
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				tiles[r][c] = Color.AQUA;
+			}
+		}
+	}
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+
+}

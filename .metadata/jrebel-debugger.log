@@ -1,0 +1,60 @@
+Log file [2014-01-11 14:39:46.249] 
+
+[2014-01-11 14:39:46.582]  [vm] isProxyType java.lang.Thread
+[2014-01-11 14:39:46.583]  [vm] detectProxyType java.lang.Thread
+[2014-01-11 14:39:46.595]  [vm] isProxyType java.lang.Thread
+[2014-01-11 14:39:46.632]  [vm] isProxyType java.lang.ref.Finalizer$FinalizerThread
+[2014-01-11 14:39:46.632]  [vm] detectProxyType java.lang.ref.Finalizer$FinalizerThread
+[2014-01-11 14:39:46.633]  [vm] isProxyType java.lang.ref.Finalizer$FinalizerThread
+[2014-01-11 14:39:46.635]  [vm] isProxyType java.lang.ref.Reference$ReferenceHandler
+[2014-01-11 14:39:46.635]  [vm] detectProxyType java.lang.ref.Reference$ReferenceHandler
+[2014-01-11 14:39:46.636]  [vm] isProxyType java.lang.ref.Reference$ReferenceHandler
+[2014-01-11 14:39:46.638]  [vm] isProxyType java.lang.Thread
+[2014-01-11 14:39:46.681]  [classprepare] submit additional request for java.lang.Error$$M$*
+[2014-01-11 14:39:46.721]  [classprepare] submit additional request for java.lang.Throwable$$M$*
+[2014-01-11 14:39:46.748]  [eventmgr] ---------------------
+[2014-01-11 14:39:46.748]  [eventmgr] start handling events
+[2014-01-11 14:39:46.749]  [eventmgr] suspend Signal Dispatcher 1
+[2014-01-11 14:39:46.750]  [eventmgr] suspend Finalizer 1
+[2014-01-11 14:39:46.750]  [eventmgr] suspend Reference Handler 1
+[2014-01-11 14:39:46.750]  [eventmgr] suspend main 1
+[2014-01-11 14:39:46.757]  [eventmgr] event VMStartEvent: 0
+[2014-01-11 14:39:46.758]  [eventmgr] end handling events with NOT_REBEL
+[2014-01-11 14:39:46.762]  [vm] resume
+[2014-01-11 14:39:46.764]  [vm] suspend count after vm resume Signal Dispatcher 0
+[2014-01-11 14:39:46.764]  [vm] suspend count after vm resume Finalizer 0
+[2014-01-11 14:39:46.765]  [vm] suspend count after vm resume Reference Handler 0
+[2014-01-11 14:39:46.765]  [vm] suspend count after vm resume main 0
+[2014-01-11 14:39:46.765]  [eventmgr] ---------------------
+[2014-01-11 14:39:46.766]  [eventmgr] start handling events
+[2014-01-11 14:39:46.766]  [eventmgr] suspend Signal Dispatcher 0
+[2014-01-11 14:39:46.767]  [eventmgr] suspend Finalizer 0
+[2014-01-11 14:39:46.767]  [eventmgr] suspend Reference Handler 0
+[2014-01-11 14:39:46.768]  [eventmgr] suspend main 0
+[2014-01-11 14:39:46.768]  [eventmgr] event ThreadStartEvent: 4
+[2014-01-11 14:39:46.768]  [eventmgr] end handling events with NOT_REBEL
+[2014-01-11 14:39:46.770]  [eventset] resume, ignore false, policy 0
+[2014-01-11 14:39:46.771]  [eventset] after eventset resume Signal Dispatcher 0
+[2014-01-11 14:39:46.771]  [eventset] after eventset resume Finalizer 0
+[2014-01-11 14:39:46.772]  [eventset] after eventset resume Reference Handler 0
+[2014-01-11 14:39:46.772]  [eventset] after eventset resume main 0
+[2014-01-11 14:39:46.854]  [eventmgr] ---------------------
+[2014-01-11 14:39:46.854]  [eventmgr] start handling events
+[2014-01-11 14:39:46.854]  [eventmgr] suspend DestroyJavaVM 0
+[2014-01-11 14:39:46.855]  [eventmgr] suspend Signal Dispatcher 0
+[2014-01-11 14:39:46.855]  [eventmgr] suspend Finalizer 0
+[2014-01-11 14:39:46.856]  [eventmgr] suspend Reference Handler 0
+[2014-01-11 14:39:46.856]  [eventmgr] ThreadDeathEvent main ThreadDeathEvent: 5 0
+[2014-01-11 14:39:46.856]  [eventmgr] end handling events with NOT_REBEL
+[2014-01-11 14:39:46.856]  [eventmgr] ---------------------
+[2014-01-11 14:39:46.857]  [eventmgr] start handling events
+[2014-01-11 14:39:46.859]  [eventset] resume, ignore false, policy 0
+[2014-01-11 14:39:46.866]  [eventmgr] got exception while logging: com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+[2014-01-11 14:39:46.866]  [eventmgr] got exception while logging: com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+[2014-01-11 14:39:46.866]  [eventmgr] got exception while logging: com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+[2014-01-11 14:39:46.866]  [eventmgr] got exception while logging: com.sun.jdi.VMDisconnectedException: Got IOException from Virtual Machine
+[2014-01-11 14:39:46.866]  [eventmgr] event ThreadStartEvent: 4
+[2014-01-11 14:39:46.867]  [eventmgr] got VMDisconnectedException
+[2014-01-11 14:39:46.867]  [eventmgr] ---------------------
+[2014-01-11 14:39:46.867]  [eventmgr] start handling events
+[2014-01-11 14:39:46.867]  [eventmgr] got VMDisconnectedException
