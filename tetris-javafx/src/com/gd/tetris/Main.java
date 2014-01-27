@@ -5,25 +5,18 @@ import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 
-import com.gd.tetris.model.Model;
-
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+	
 	//TilePane gridView = new TilePane();
 	GridPane gridView = new GridPane();
 	BorderPane bp = new BorderPane();
@@ -37,6 +30,8 @@ public class Main extends Application {
 		create();
 		primaryStage.setTitle("Tetris - JavaFX");
 		Scene scene = new Scene(bp);
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, controller);
+		scene.addEventHandler(KeyEvent.KEY_RELEASED, controller);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		new Thread(controller).start();
@@ -44,8 +39,14 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+		//Main m = new Main();
+		//m.go();
 	}
 	
+	public void go() {
+		
+	}
+		
 	public void create() throws IOException {
 		log("starting...");
 		Path p = FileSystems.getDefault().getPath("tetris.properties");
@@ -56,8 +57,8 @@ public class Main extends Application {
 		cols = Integer.parseInt(props.getProperty("width"));
 		//set up screen
 		bp.setCenter(gridView);
-		gridView.setHgap(2);
-		gridView.setVgap(2);
+		gridView.setHgap(0);
+		gridView.setVgap(0);
 		controller = new Controller(gridView, rows, cols);
 	}
 	

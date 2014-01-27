@@ -1,0 +1,6 @@
+1390145363601	Rename type 'Tile'
+1390145507380	Rename type 'Cell'
+1390146650948	Rename method 'createBlock'
+1390164955355	Rename method 'addWithoutCollision'
+1390165055443	Rename local variable 'ok'
+1390165326732	Rename field 'faller'

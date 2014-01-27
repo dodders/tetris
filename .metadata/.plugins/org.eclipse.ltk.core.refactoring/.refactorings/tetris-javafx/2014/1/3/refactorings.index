@@ -4,3 +4,7 @@
 1389568162583	Rename type 'I'
 1389580185837	Copy compilation unit
 1389581137317	Rename method 'placeBlock'
+1389923921098	Rename method 'updateView'
+1390072101037	Extract method 'pause'
+1390075075153	Extract method 'array2DCopy'
+1390075147047	Rename local variable 'copy'

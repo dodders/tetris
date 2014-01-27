@@ -1,0 +1,108 @@
+package com.gd.tetris.model;
+
+import javafx.scene.paint.Color;
+
+
+public class Matrix {
+
+	Tile[][] matrix;
+	int rows, cols;
+
+	public Matrix(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		this.matrix = new Tile[rows][cols];
+	}
+	
+	public boolean addWithoutCollision(Matrix m, int row, int col) {
+		boolean ok = true;
+		
+		Tile[][] save = new Tile[rows][cols];
+		array2DCopy(matrix, save); //copy from matrix to save
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				if (m.getCell(r, c) != null) {
+					if (row + r >= rows || col + c >= cols) {
+						ok = false;
+						break;
+					}
+					if (matrix[row + r][col + c] == null) {
+						matrix[row + r][col + c] = m.getCell(r, c);
+					} else {
+						ok = false;
+						break;
+					}
+				}
+			}
+		}
+		if (!ok) {
+			array2DCopy(save, matrix); //copy from save to matrix
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void replace(Matrix m, int row, int col, Color color) {
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				if (m.getCell(r, c) != null) {
+					if (row + r < rows || col + c < cols) {
+						Tile t = this.getCell(row + r,  col + c);
+						t.setColor(color);
+					}
+				}
+			}
+		}
+	}
+	
+	public Tile[][] array2DCopy(Tile[][] from) {
+		Tile[][] to = new Tile[rows][cols];
+		for (int i = 0; i < rows; i++) {
+			System.arraycopy(from[i], 0, to[i], 0, cols);
+		}
+		return to;
+	}
+
+	public void add(Matrix m, int row, int col) {
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				matrix[row + r][col + c] = m.getCell(r, c);
+			}
+		}
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("{");
+		for (int r = 0; r < rows; r++) {
+			sb.append("{");
+			for (int c = 0; c < cols; c++) {
+				if (getCell(r, c) != null) {
+					sb.append(1);
+				} else {
+					sb.append(0);
+				}
+				sb.append(",");
+			}
+			sb.deleteCharAt(sb.length() - 1);
+			sb.append("},");
+		}
+		sb.deleteCharAt(sb.length() - 1);
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	public Tile getCell(int row, int col) {
+		return matrix[row][col];
+	}
+	
+	public void setCell(int row, int col, Tile cell) {
+		matrix[row][col] = cell;
+	}
+	
+	
+	public void log(String msg) {
+		System.out.println(msg);
+	}
+}

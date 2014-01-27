@@ -1,0 +1,88 @@
+package com.gd.tetris.model;
+
+import com.gd.tetris.model.Matrix.Rotation;
+
+import javafx.scene.paint.Color;
+
+public abstract class GameObject {
+	
+	protected int col, row;
+	protected int cols, rows;
+	protected Matrix<Tile> shape;
+	protected Color color;
+	
+	public void init(int[][] initShape, int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+		shape = new Matrix(initShape, rows, cols);
+	}
+	
+	public boolean down(int maxRow) {
+		if (row < maxRow - rows) {
+			row++;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean left() {
+		if (col > 0) {
+			col--;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean right(int maxCol) {
+		if (col < maxCol - cols) {
+			col++;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void rotateRight() {
+		shape.rotate(Rotation.Right);
+	}
+	
+	public void rotateLeft() {
+		shape.rotate(Rotation.Left);
+	}
+	
+	public Color getColor() {
+		return this.color;
+	}
+
+	public Matrix getShape() {
+		return shape;
+	}
+
+	public void setShape(Matrix shape) {
+		this.shape = shape;
+	}
+
+	public int getCol() {
+		return col;
+	}
+	public void setCol(int col) {
+		this.col = col;
+	}
+	public int getRow() {
+		return row;
+	}
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+	
+	public String toString() {
+		return shape.toString();
+	}
+
+}

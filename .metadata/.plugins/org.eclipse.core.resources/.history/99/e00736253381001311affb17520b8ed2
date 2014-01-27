@@ -1,0 +1,146 @@
+package com.gd.tetris.model;
+
+import java.util.Observer;
+
+import javafx.scene.paint.Color;
+import com.gd.tetris.model.Tile;
+
+public class Model{
+	
+	public Matrix tiles;
+	public int rows;
+	public int cols;
+	public Color background = Color.AQUA;
+	GameObject faller = null;
+	Observer observer;
+	public enum DrawType {
+		Draw, Erase;
+	}
+	
+	public Model(int rows, int cols, Observer o) {
+		this.rows = rows;
+		this.cols = cols;
+		this.observer = o;
+		tiles = new Matrix(rows, cols);
+	}
+	
+	public void init(Observer o) {
+		
+		log("creating " + rows * cols + " tiles.");
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				Tile t = new Tile(background);
+				t.row = r;
+				t.col = c;
+				t.setColor(background);
+				t.addObserver(o);
+				tiles.setCell(r, c, t);
+			}
+		}
+	}
+	
+	public GameObject getBlock() {
+		return faller;
+	}
+	
+	public void newBlock() {
+		faller = new BlockL(0, 3);
+		drawBlock(faller);
+	}
+	
+	public boolean blockDown() {
+		removeBlock(faller);
+		if (faller.down(rows)) {
+			if (drawBlock(faller)) {
+				return true;
+			} else {
+				faller.up();
+				drawBlock(faller);
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean drawBlock(GameObject b) {
+		return true;
+	}
+	
+	public void removeBlock(GameObject o) {
+	}
+	
+	public boolean addWithoutCollision(GameObject obj, int row, int col) {
+		boolean ok = true;
+		Matrix save = tiles.clone();
+		Matrix m = obj.getShape();
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				if (m.getCell(r, c) != null) {
+					if (row + r >= rows || col + c >= cols) {
+						ok = false;
+						break;
+					}
+					if (tiles.getCell(row + r,col + c) == null) {
+						tiles.setCell(row + r,col + c,m.getCell(r, c));
+					} else {
+						ok = false;
+						break;
+					}
+				}
+			}
+		}
+		if (!ok) {
+			tiles = save;
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void replace(Matrix m, int row, int col, Color color) {
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				if (m.getCell(r, c) != null) {
+					if (row + r < rows || col + c < cols) {
+						Tile t = this.getCell(row + r,  col + c);
+						t.setColor(color);
+					}
+				}
+			}
+		}
+	}
+
+	public void add(Matrix m, int row, int col) {
+		for (int r = 0; r < m.rows; r++) {
+			for (int c = 0; c < m.cols; c++) {
+				matrix[row + r][col + c] = m.getCell(r, c);
+			}
+		}
+	}
+	
+/*	public void drawBlock(GameObject b, DrawType type) {
+		Matrix<Tile> blockMap = b.getShape();
+		for (int r = 0; r < blockMap.rows; r++) {
+			for (int c = 0; c < blockMap.cols; c++) {
+				if (blockMap.getCell(r, c) != null) {
+					Tile t = new Tile();
+					t.row = b.getRow() + r;
+					t.col = b.getCol() + c;
+					t.addObserver(o);
+					if (type == DrawType.Draw) {
+						t.setColor(b.getColor());
+					} else {
+						t.setColor(background);
+					}
+					tiles.setCell(r, c, t);
+				}
+			}
+		}
+	}*/
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+
+}

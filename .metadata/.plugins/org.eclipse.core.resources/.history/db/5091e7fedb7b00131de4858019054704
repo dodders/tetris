@@ -1,6 +1,0 @@
-package com.gd.tetris.model;
-
-public class Model {
-
-	GameObject[][] grid = new GameObject[][]();
-}

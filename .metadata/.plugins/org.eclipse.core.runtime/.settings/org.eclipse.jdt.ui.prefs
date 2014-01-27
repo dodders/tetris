@@ -1,3 +1,4 @@
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.nio.file.OpenOption"><rhs name\="java.nio.file.StandardOpenOption"/></lhs><lhs name\="javafx.scene.paint.Paint"><rhs name\="javafx.scene.paint.Color"/></lhs><lhs name\="java.lang.Enum"><rhs name\="javafx.scene.input.KeyCode"/><rhs name\="com.gd.tetris.model.Matrix$Rotation"/><rhs name\="com.gd.tetris.model.Model$DrawType"/></lhs><lhs name\="com.gd.tetris.model.Model$DrawType"><rhs name\="com.gd.tetris.model.Model$DrawType"/></lhs><lhs name\="com.gd.tetris.model.Matrix$Rotation"><rhs name\="com.gd.tetris.model.Matrix$Rotation"/></lhs></history>
 content_assist_number_of_computers=15
 content_assist_proposals_background=255,255,255
 content_assist_proposals_foreground=0,0,0

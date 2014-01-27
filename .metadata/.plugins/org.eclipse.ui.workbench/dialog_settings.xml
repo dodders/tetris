@@ -12,6 +12,17 @@
 		<list key="textEntries">
 		</list>
 	</section>
+	<section name="WorkbenchPreferenceDialogSettings">
+		<item value="126" key="DIALOG_Y_ORIGIN"/>
+		<item value="322" key="DIALOG_X_ORIGIN"/>
+	</section>
+	<section name="NewWizardAction">
+		<item value="at.bestsolution.efxclipse.tooling.jdt.ui.newappclass" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="at.bestsolution.efxclipse.tooling"/>
+			<item value="at.bestsolution.efxclipse.tooling/at.bestsolution.efxclipse.tooling.clazz"/>
+		</list>
+	</section>
 	<section name="ImportExportAction">
 		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
 		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">

@@ -1,0 +1,17 @@
+package com.gd.tetris.model;
+
+import javafx.scene.paint.Color;
+
+public class BlockL extends GameObject {
+
+	public BlockL(int row, int col) {
+		super(3, 3);
+		color = Color.DARKBLUE;
+		shape.setCell(0, 0, new Cell(color));
+		shape.setCell(1, 0, new Cell(color));
+		shape.setCell(1, 0, new Cell(color));
+		shape.setCell(1, 1, new Cell(color));
+		this.row = row;
+		this.col = col;
+	}
+}

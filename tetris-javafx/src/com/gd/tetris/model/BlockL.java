@@ -1,46 +1,18 @@
 package com.gd.tetris.model;
 
 import javafx.scene.paint.Color;
+import com.gd.tetris.model.Tile;
 
 public class BlockL extends GameObject {
 
-	public BlockL() {
-		color = Color.DARKBLUE;
-		shape[0][0] = 1;
-		shape[1][0] = 1;
-		shape[1][1] = 1;
-		shape[1][2] = 1;
-		x = 3;
-		y = 0;
+	public BlockL(int row, int col) {
+		super(3, 3);
+		color = Color.DARKMAGENTA;
+		shape.setCell(0, 0, new Tile(color));
+		shape.setCell(1, 0, new Tile(color));
+		shape.setCell(2, 0, new Tile(color));
+		shape.setCell(2, 1, new Tile(color));
+		this.row = row;
+		this.col = col;
 	}
-	
-	@Override
-	public void rotateRight() {
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-		shape[0][0] = 0;
-	}
-
-	@Override
-	public void rotateLeft() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

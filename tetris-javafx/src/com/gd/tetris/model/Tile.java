@@ -10,6 +10,11 @@ public class Tile extends Observable {
 	public int row;
 	public int col;
 	
+	public Tile(Color c) {
+		super();
+		this.setColor(c);
+	}
+	
 	public Tile() {
 		super();
 	}
