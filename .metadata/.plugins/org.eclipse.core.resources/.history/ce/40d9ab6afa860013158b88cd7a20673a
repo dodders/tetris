@@ -74,6 +74,14 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		}
 	}
 
+	private void pause() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void doKeys() {
 		//System.out.println(keyMap.toString());
 		if (keyMap.get(KeyCode.RIGHT)) {
@@ -100,9 +108,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	public class DownTimer implements Runnable {
 
 		Model m;
-		int millis = 500;
-		
-		public DownTimer(Model m) {
+		int millis = 500;public DownTimer(Model m) {
 			this.m = m;
 		}
 

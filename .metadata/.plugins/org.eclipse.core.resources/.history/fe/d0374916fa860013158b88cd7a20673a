@@ -42,7 +42,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		keys.put(KeyCode.RIGHT, false);
 		keys.put(KeyCode.UP, false);
 		keys.put(KeyCode.DOWN, false);
-		keys.put(KeyCode.SPACE, false);
 		downTimer = new DownTimer(model);
 	}
 	
@@ -74,6 +73,14 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		}
 	}
 
+	private void pause() {
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void doKeys() {
 		//System.out.println(keyMap.toString());
 		if (keyMap.get(KeyCode.RIGHT)) {
@@ -85,9 +92,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		} else if (keyMap.get(KeyCode.UP)) {
 			model.rotateBlockLeft();
 			keyMap.put(KeyCode.UP, false);
-		} else if (keyMap.get(KeyCode.SPACE)) {
-			model.dropBlock();
-			keyMap.put(KeyCode.SPACE, false);
 		}
 	}
 

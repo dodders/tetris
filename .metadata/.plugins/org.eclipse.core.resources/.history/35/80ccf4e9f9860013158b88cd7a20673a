@@ -76,10 +76,6 @@ public class Model{
 		return false;
 	}
 	
-	public void dropBlock() {
-		while (blockDown()) {};
-	}
-	
 
 	public boolean blockRight() {
 		removeBlock(block);

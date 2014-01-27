@@ -77,7 +77,8 @@ public class Model{
 	}
 	
 	public void dropBlock() {
-		while (blockDown()) {};
+		removeBlock(block);
+		while (block.down(rows)) {};
 	}
 	
 
