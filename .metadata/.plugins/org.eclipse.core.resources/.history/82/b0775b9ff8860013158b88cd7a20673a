@@ -29,7 +29,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	int currCol = 0, prevCol = 0;	
 	HashMap<KeyCode, Boolean> keys = new HashMap<>();
 	Map<KeyCode, Boolean> keyMap = Collections.synchronizedMap(keys);
-	DownTimer downTimer;
 	
 	public Controller(GridPane tp, int rows, int cols) {
 		this.view = tp;
@@ -42,7 +41,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		keys.put(KeyCode.RIGHT, false);
 		keys.put(KeyCode.UP, false);
 		keys.put(KeyCode.DOWN, false);
-		downTimer = new DownTimer(model);
 	}
 	
 	private void createView() {
@@ -59,8 +57,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	@Override
 	public void run() {
 		model.newBlock();
-		Thread t = new Thread(downTimer);
-		t.start();
 		while(true) {
 			doKeys();
 			/*
@@ -112,17 +108,16 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 
 		@Override
 		public void run() {
-			while(true) {
-				if (!m.blockDown()) {
-					m.newBlock();
-				}
-				try {
-					Thread.sleep(millis);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			if (!m.blockDown()) {
+				m.newBlock();
+			}
+			try {
+				Thread.sleep(millis);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
+		
 	}
 	
 	public class UpdateCell implements Runnable {

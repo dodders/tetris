@@ -59,8 +59,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	@Override
 	public void run() {
 		model.newBlock();
-		Thread t = new Thread(downTimer);
-		t.start();
+		downTimer.run();
 		while(true) {
 			doKeys();
 			/*
@@ -112,17 +111,16 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 
 		@Override
 		public void run() {
-			while(true) {
-				if (!m.blockDown()) {
-					m.newBlock();
-				}
-				try {
-					Thread.sleep(millis);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			if (!m.blockDown()) {
+				m.newBlock();
+			}
+			try {
+				Thread.sleep(millis);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
+		
 	}
 	
 	public class UpdateCell implements Runnable {
