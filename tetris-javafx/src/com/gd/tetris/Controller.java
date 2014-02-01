@@ -11,6 +11,8 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -52,10 +54,13 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	private void createView() {
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
-				Rectangle rect = new Rectangle(20,20,20,20);
+				ImageView iv = new ImageView();
 				Tile t = model.tiles.getCell(r, c);
-				rect.setFill(t.getColor());
-				view.add(rect, c, r);
+				iv.setImage(t.getImage());
+				iv.setFitHeight(20);
+				iv.setFitWidth(20);
+				iv.setCache(true);
+				view.add(iv, c, r);
 			}
 		}
 	}
@@ -143,8 +148,8 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		
 		@Override
 		public void run() {
-			Rectangle r = (Rectangle)view.get(t.row, t.col);
-			r.setFill(t.getColor());
+			ImageView iv = (ImageView)view.get(t.row, t.col);
+			iv.setImage(t.getImage());
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package com.gd.tetris.model;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public abstract class GameObject {
@@ -9,6 +10,7 @@ public abstract class GameObject {
 	protected Matrix shape;
 	protected Color color;
 	protected int angle;
+	protected Image image;
 	
 	public enum Rotation { 
 		Right, 

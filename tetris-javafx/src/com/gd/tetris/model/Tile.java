@@ -2,34 +2,35 @@ package com.gd.tetris.model;
 
 import java.util.Observable;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Tile extends Observable {
 
-	private Color color = Color.AQUA;
 	public int row;
 	public int col;
+	private Image image;
 	
-	public Tile(Color c) {
+	public Tile(Image i) {
 		super();
-		this.setColor(c);
+		this.setImage(i);
 	}
 	
 	public Tile() {
 		super();
 	}
 	
-	public void setColor(Color c) {
-		color = c;
-		setChanged();
-		notifyObservers();
-	}
-	
-	public Color getColor() {
-		return color;
-	}
-	
 	public String toString() {
 		return "tile:" + row + ":" + col;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+		setChanged();
+		notifyObservers();
 	}
 }
