@@ -81,11 +81,13 @@ public class Model{
 			}
 			//move everything else down
 			for (int r = lastRow; r > numRows; r--) {
+				log("moving row " + r + " down by " + numRows);
 				for (int c = 0; c < cols; c++) {
 					tiles.getCell(r, c).setColor(tiles.getCell(r - numRows, c).getColor());
 				}
 			}
 		}
+		log("finished moving down.");
 		drawBlock(block);
 	}
 

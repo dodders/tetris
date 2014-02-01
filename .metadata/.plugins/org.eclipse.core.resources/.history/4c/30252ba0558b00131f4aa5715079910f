@@ -80,12 +80,14 @@ public class Model{
 				}
 			}
 			//move everything else down
-			for (int r = lastRow; r > numRows; r--) {
+			for (int r = lastRow; r >= 0; r--) {
+				log("moving row " + r + " down.");
 				for (int c = 0; c < cols; c++) {
-					tiles.getCell(r, c).setColor(tiles.getCell(r - numRows, c).getColor());
+					tiles.getCell(r, c).setColor(tiles.getCell(r-1, c).getColor());
 				}
 			}
 		}
+		log("finished moving down.");
 		drawBlock(block);
 	}
 

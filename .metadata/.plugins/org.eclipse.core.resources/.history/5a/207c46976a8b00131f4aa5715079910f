@@ -86,6 +86,7 @@ public class Model{
 				}
 			}
 		}
+		log("finished moving down.");
 		drawBlock(block);
 	}
 

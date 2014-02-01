@@ -65,24 +65,15 @@ public class Model{
 		return fullRows;
 	}
 
-	public void eraseFullRows() {
-		List<Integer> fullRows = getFullRows();
-		if (fullRows.size() == 0) {
-			return;
-		}
+	public void eraseRow(Integer row) {
 		removeBlock(block);
-		int numRows = fullRows.size();
-		int lastRow = fullRows.get(0);
 		synchronized(lock) {
-			for (Integer row : fullRows) {
-				for (int c = 0; c < cols; c++) {
-					tiles.getCell(row, c).setColor(background);
-				}
+			for (int c = 0; c < cols; c++) {
+				tiles.getCell(row, c).setColor(background);
 			}
-			//move everything else down
-			for (int r = lastRow; r > numRows; r--) {
+			for (int r = row; r > 0; r--) {
 				for (int c = 0; c < cols; c++) {
-					tiles.getCell(r, c).setColor(tiles.getCell(r - numRows, c).getColor());
+					tiles.getCell(r, c).setColor(tiles.getCell(r-1, c).getColor());
 				}
 			}
 		}
@@ -92,7 +83,6 @@ public class Model{
 	
 	public void newBlock() {
 		int n = random.nextInt(7);
-		n = 0;
 		switch(n) {
 			case 0 :block = new BlockI(0, 3); break;
 			case 1 :block = new BlockJ(0, 3); break;

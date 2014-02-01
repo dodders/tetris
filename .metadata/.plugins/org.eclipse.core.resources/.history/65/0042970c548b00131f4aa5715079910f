@@ -160,7 +160,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		@Override
 		public void run() {
 			for (Integer i : rows) {
-				m.eraseFullRows();
+				m.eraseRow(i);
 			}
 		}
 		

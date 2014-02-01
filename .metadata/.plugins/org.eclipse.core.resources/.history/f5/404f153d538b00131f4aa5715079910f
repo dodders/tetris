@@ -124,7 +124,10 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 				if (!m.blockDown()) {
 					m.newBlock();
 				}
-				m.eraseFullRows();
+				List<Integer> fullRows = m.getFullRows();
+				if (fullRows.size() > 0) {
+					Platform.runLater(new EraseRows(model, fullRows));
+				}
 				try {
 					Thread.sleep(millis);
 				} catch (InterruptedException e) {
@@ -160,7 +163,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		@Override
 		public void run() {
 			for (Integer i : rows) {
-				m.eraseFullRows();
+				m.eraseRow(i);
 			}
 		}
 		

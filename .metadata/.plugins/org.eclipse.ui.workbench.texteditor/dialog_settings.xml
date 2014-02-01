@@ -3,18 +3,24 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="263" key="DIALOG_WIDTH"/>
 		<item value="218" key="DIALOG_Y_ORIGIN"/>
-		<item value="602" key="DIALOG_X_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="602" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="init" key="selection"/>
+		<item value="EraseRows" key="selection"/>
 		<list key="findhistory">
+			<item value="eraserows"/>
+			<item value="updatecell"/>
+			<item value="viewpane"/>
+			<item value="PrintNodes"/>
+			<item value="printnodes"/>
+			<item value="colour"/>
 			<item value="&#x09;public boolean addWithoutCollision(Matrix m, int row, int col) {&#x0A;&#x09;&#x09;boolean ok = true;&#x0A;&#x09;&#x09;&#x0A;&#x09;&#x09;Tile[][] save = array2DCopy(matrix);&#x0A;&#x09;&#x09;for (int r = 0; r &lt; m.rows; r++) {&#x0A;&#x09;&#x09;&#x09;for (int c = 0; c &lt; m.cols; c++) {&#x0A;&#x09;&#x09;&#x09;&#x09;if (m.getCell(r, c) != null) {&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;if (row + r &gt;= rows || col + c &gt;= cols) {&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;ok = false;&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;break;&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;}&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;if (matrix[row + r][col + c] == null) {&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;matrix[row + r][col + c] = m.getCell(r, c);&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;} else {&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;ok = false;&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;break;&#x0A;&#x09;&#x09;&#x09;&#x09;&#x09;}&#x0A;&#x09;&#x09;&#x09;&#x09;}&#x0A;&#x09;&#x09;&#x09;}&#x0A;&#x09;&#x09;}&#x0A;&#x09;&#x09;if (!ok) {&#x0A;&#x09;&#x09;&#x09;matrix = array2DCopy(save);&#x0A;&#x09;&#x09;&#x09;return false;&#x0A;&#x09;&#x09;} else {&#x0A;&#x09;&#x09;&#x09;return true;&#x0A;&#x09;&#x09;}&#x0A;&#x09;}"/>
 			<item value="init"/>
 		</list>
