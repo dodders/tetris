@@ -1,0 +1,24 @@
+import java.beans.PropertyChangeSupport;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+
+public class Tile {
+	
+	public IntegerProperty row = new SimpleIntegerProperty();
+	public IntegerProperty col = new SimpleIntegerProperty();
+	private String colour = new String();
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	
+	public String getColour() {
+		return colour;
+	}
+	public void setColour(String colour) {
+		String old = colour;
+		this.colour = colour;
+		pcs.firePropertyChange("colour", old, colour)
+	}
+	
+
+}

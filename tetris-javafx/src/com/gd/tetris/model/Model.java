@@ -1,6 +1,7 @@
 package com.gd.tetris.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observer;
 import java.util.Random;
 
@@ -11,7 +12,8 @@ public class Model{
 	public Matrix tiles;
 	public int rows;
 	public int cols;
-	public Color background = Color.AQUA;
+	public Color background = Color.BLACK;
+	public Object lock = new Object();
 	GameObject block = null;
 	Observer observer;
 	public enum DrawType {
@@ -45,6 +47,39 @@ public class Model{
 	public GameObject getBlock() {
 		return block;
 	}
+	
+	public List<Integer> getFullRows() {
+		ArrayList<Integer> fullRows = new ArrayList<>();
+		for (int r = rows - 1; r >= 0; r--) {
+			boolean rowFull = true;
+			for (int c = 0; c < cols; c++) {
+				if (tiles.getCell(r, c).getColor() == background) {
+					rowFull = false;
+					break;
+				}
+			}
+			if (rowFull) {
+				fullRows.add(r);
+			}
+		}
+		return fullRows;
+	}
+
+	public void eraseRow(Integer row) {
+		removeBlock(block);
+		synchronized(lock) {
+			for (int c = 0; c < cols; c++) {
+				tiles.getCell(row, c).setColor(background);
+			}
+			for (int r = row; r > 0; r--) {
+				for (int c = 0; c < cols; c++) {
+					tiles.getCell(r, c).setColor(tiles.getCell(r-1, c).getColor());
+				}
+			}
+		}
+		drawBlock(block);
+	}
+
 	
 	public void newBlock() {
 		int n = random.nextInt(7);
@@ -124,47 +159,51 @@ public class Model{
 	}
 	
 	public boolean drawBlock(GameObject obj) {
-		boolean drawn = true;
-		Matrix m = obj.getShape();
-		ArrayList<Tile> changed = new ArrayList<>();
-		for (int r = 0; r < m.rows; r++) {
-			for (int c = 0; c < m.cols; c++) {
-				if (m.getCell(r, c) != null) {
-					int newRow = obj.getRow() + r;
-					int newCol = obj.getCol() + c;
-					if (newRow >= rows || newCol >= cols) {
-						drawn = false;
-						break;
-					}
-					Tile t = tiles.getCell(newRow, newCol);
-					if (t.getColor() == background) {
-						changed.add(t);
-						t.setColor(m.getCell(r, c).getColor());
-					} else {
-						drawn = false;
-						break;
+		synchronized(lock) {
+			boolean drawn = true;
+			Matrix m = obj.getShape();
+			ArrayList<Tile> changed = new ArrayList<>();
+			for (int r = 0; r < m.rows; r++) {
+				for (int c = 0; c < m.cols; c++) {
+					if (m.getCell(r, c) != null) {
+						int newRow = obj.getRow() + r;
+						int newCol = obj.getCol() + c;
+						if (newRow >= rows || newCol >= cols) {
+							drawn = false;
+							break;
+						}
+						Tile t = tiles.getCell(newRow, newCol);
+						if (t.getColor() == background) {
+							changed.add(t);
+							t.setColor(m.getCell(r, c).getColor());
+						} else {
+							drawn = false;
+							break;
+						}
 					}
 				}
 			}
-		}
-		if (drawn) {
-			return true;
-		} else {
-			for (Tile t : changed) {
-				t.setColor(background);
+			if (drawn) {
+				return true;
+			} else {
+				for (Tile t : changed) {
+					t.setColor(background);
+				}
+				return false;
 			}
-			return false;
 		}
 	}
 	
 	public void removeBlock(GameObject obj) {
-		Matrix m = obj.getShape();
-		for (int r = 0; r < m.rows; r++) {
-			for (int c = 0; c < m.cols; c++) {
-				if (m.getCell(r, c) != null) {
-					if (obj.getRow() + r < rows || obj.getCol() + c < cols) {
-						Tile t = tiles.getCell(obj.getRow() + r, obj.getCol() + c);
-						t.setColor(background);
+		synchronized(lock) {
+			Matrix m = obj.getShape();
+			for (int r = 0; r < m.rows; r++) {
+				for (int c = 0; c < m.cols; c++) {
+					if (m.getCell(r, c) != null) {
+						if (obj.getRow() + r < rows || obj.getCol() + c < cols) {
+							Tile t = tiles.getCell(obj.getRow() + r, obj.getCol() + c);
+							t.setColor(background);
+						}
 					}
 				}
 			}

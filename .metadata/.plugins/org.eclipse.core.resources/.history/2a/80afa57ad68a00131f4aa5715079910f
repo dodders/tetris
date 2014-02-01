@@ -1,0 +1,11 @@
+package com.gd.tetris;
+
+import javafx.scene.layout.GridPane;
+
+public class ViewPane extends GridPane {
+	
+	public ViewPane() {
+		super();
+	}
+	
+}

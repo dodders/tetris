@@ -1,0 +1,12 @@
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+
+public class Tile {
+	
+	public IntegerProperty row = new SimpleIntegerProperty();
+	public IntegerProperty col = new SimpleIntegerProperty();
+	String colour = new String();
+	
+
+}

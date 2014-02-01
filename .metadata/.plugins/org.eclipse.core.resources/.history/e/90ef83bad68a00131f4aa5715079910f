@@ -1,0 +1,19 @@
+package com.gd.tetris;
+
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
+
+public class ViewPane extends GridPane {
+	
+	Node[][] nodes;
+	
+	public ViewPane(int rows, int cols) {
+		super();
+	}
+	
+	@Override
+	public void add(Node child, int columnIndex, int rowIndex) {
+		
+	}
+	
+}

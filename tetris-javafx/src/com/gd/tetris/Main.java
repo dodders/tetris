@@ -17,8 +17,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 	
-	//TilePane gridView = new TilePane();
-	GridPane gridView = new GridPane();
+	//GridPane gridView = new GridPane();
+	ViewPane gridView;
 	BorderPane bp = new BorderPane();
 	Properties props = new Properties();
 	int rows;
@@ -56,6 +56,7 @@ public class Main extends Application {
 		rows = Integer.parseInt(props.getProperty("height"));
 		cols = Integer.parseInt(props.getProperty("width"));
 		//set up screen
+		gridView = new ViewPane(rows, cols);
 		bp.setCenter(gridView);
 		gridView.setHgap(0);
 		gridView.setVgap(0);

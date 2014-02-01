@@ -2,12 +2,15 @@ package com.gd.tetris;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -19,7 +22,7 @@ import com.gd.tetris.model.Tile;
 public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 
 	//TilePane view;
-	GridPane view;
+	ViewPane view;
 	Model model;
 	Rectangle r;
 	Rectangle prev;
@@ -31,7 +34,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	Map<KeyCode, Boolean> keyMap = Collections.synchronizedMap(keys);
 	DownTimer downTimer;
 	
-	public Controller(GridPane tp, int rows, int cols) {
+	public Controller(ViewPane tp, int rows, int cols) {
 		this.view = tp;
 		this.rows = rows;
 		this.cols = cols;
@@ -64,18 +67,10 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		t.start();
 		while(true) {
 			doKeys();
-			/*
-			pause();
-			if (model.blockDown()) {
-				doKeys();
-			} else {
-				model.newBlock();
-			}*/
 		}
 	}
 
 	private void doKeys() {
-		//System.out.println(keyMap.toString());
 		if (keyMap.get(KeyCode.RIGHT)) {
 			model.blockRight();
 			keyMap.put(KeyCode.RIGHT, false);
@@ -97,10 +92,27 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		Platform.runLater(new UpdateCell(t));
 	}
 	
+	public class PrintNodes implements Runnable {
+
+		ObservableList<Node> l;
+		public PrintNodes(ObservableList<Node> l) {
+			this.l = l;
+		}
+		@Override
+		public void run() {
+			int c = 0;
+			for (Node n : l) {
+				Rectangle r = (Rectangle)n;
+				log("rectangle " + c + " is colour " + r.getFill().toString());
+			}
+		}
+		
+	}
+	
 	public class DownTimer implements Runnable {
 
 		Model m;
-		int millis = 500;
+		int millis = 700;
 		
 		public DownTimer(Model m) {
 			this.m = m;
@@ -111,6 +123,10 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 			while(true) {
 				if (!m.blockDown()) {
 					m.newBlock();
+				}
+				List<Integer> fullRows = m.getFullRows();
+				if (fullRows.size() > 0) {
+					Platform.runLater(new EraseRows(model, fullRows));
 				}
 				try {
 					Thread.sleep(millis);
@@ -130,10 +146,27 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		
 		@Override
 		public void run() {
-			Rectangle r = new Rectangle(20,20,20,20);
+			Rectangle r = (Rectangle)view.get(t.row, t.col);
 			r.setFill(t.getColor());
-			view.add(r, t.col, t.row);
 		}
+	}
+	
+	public class EraseRows implements Runnable {
+		List<Integer> rows;
+		Model m;
+		
+		public EraseRows(Model m, List<Integer> fullRows) {
+			this.m = m;
+			this.rows = fullRows;
+		}
+		
+		@Override
+		public void run() {
+			for (Integer i : rows) {
+				m.eraseRow(i);
+			}
+		}
+		
 	}
 	
 	@Override
