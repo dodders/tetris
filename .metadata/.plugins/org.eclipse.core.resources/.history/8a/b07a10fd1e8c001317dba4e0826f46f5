@@ -1,0 +1,237 @@
+package com.gd.tetris.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observer;
+import java.util.Random;
+
+import javafx.scene.image.Image;
+
+public class Model{
+	
+	public Matrix tiles;
+	public int rows;
+	public int cols;
+	public Object lock = new Object();
+	private boolean finished = false;
+	GameObject block = null;
+	Observer observer;
+	
+	public enum DrawType {
+		Draw, Erase;
+	}
+	private Random random;
+	private Image background = new Image("Background.png");
+	
+	public Model(int rows, int cols, Observer o) {
+		this.rows = rows;
+		this.cols = cols;
+		this.observer = o;
+		tiles = new Matrix(rows, cols);
+		random = new Random();
+	}
+	
+	public void init(Observer o) {
+		
+		log("creating " + rows * cols + " tiles.");
+		for (int r = 0; r < rows; r++) {
+			for (int c = 0; c < cols; c++) {
+				Tile t = new Tile(background);
+				t.row = r;
+				t.col = c;
+				t.addObserver(o);
+				tiles.setCell(r, c, t);
+			}
+		}
+	}
+	
+	public GameObject getBlock() {
+		return block;
+	}
+	
+	public List<Integer> getFullRows() {
+		ArrayList<Integer> fullRows = new ArrayList<>();
+		for (int r = rows - 1; r >= 0; r--) {
+			boolean rowFull = true;
+			for (int c = 0; c < cols; c++) {
+				if (tiles.getCell(r, c).getImage() == background) {
+					rowFull = false;
+					break;
+				}
+			}
+			if (rowFull) {
+				fullRows.add(r);
+			}
+		}
+		return fullRows;
+	}
+
+	public void eraseFullRows() {
+		List<Integer> fullRows = getFullRows();
+		if (fullRows.size() == 0) {
+			return;
+		}
+		removeBlock(block);
+		int numRows = fullRows.size();
+		int lastRow = fullRows.get(0);
+		synchronized(lock) {
+			for (Integer row : fullRows) {
+				for (int c = 0; c < cols; c++) {
+					tiles.getCell(row, c).setImage(background);
+				}
+			}
+			//move everything else down
+			for (int r = lastRow; r > numRows; r--) {
+				for (int c = 0; c < cols; c++) {
+					tiles.getCell(r, c).setImage(tiles.getCell(r - numRows, c).getImage());
+				}
+			}
+		}
+		drawBlock(block, false);
+	}
+
+	
+	public boolean newBlock() {
+		int n = random.nextInt(7);
+		//n = 2;
+		switch(n) {
+			case 0 :block = new BlockI(0, 3); break;
+			case 1 :block = new BlockJ(0, 3); break;
+			case 2 :block = new BlockL(0, 3); break;
+			case 3 :block = new BlockO(0, 3); break;
+			case 4 :block = new BlockS(0, 3); break;
+			case 5 :block = new BlockT(0, 3); break;
+			case 6 :block = new BlockZ(0, 3); break;
+		}
+		return(this.drawBlock(block, true));
+	}
+	
+	public boolean blockDown() {
+		removeBlock(block);
+		if (block.down(rows)) {
+			if (drawBlock(block, false)) {
+				return true;
+			} else {
+				block.up();
+				drawBlock(block, false);
+			}
+		} else {
+			drawBlock(block, false);
+			return false;
+		}
+		return false;
+	}
+	
+	public void dropBlock() {
+		while (blockDown()) {};
+	}
+	
+
+	public boolean blockRight() {
+		removeBlock(block);
+		if (block.right(cols)) {
+			if(drawBlock(block, false)) {
+				return true;
+			} else {
+				block.left();
+				drawBlock(block, false);
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public boolean blockLeft() {
+		removeBlock(block);
+		if (block.left()) {
+			if (drawBlock(block, false)) {
+				return true;
+			} else {
+				block.right(cols);
+				drawBlock(block, false);
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+
+	public boolean rotateBlockLeft() {
+		removeBlock(block);
+		block.rotateLeft();
+		if (drawBlock(block, false)) {
+			return true;
+		} else {
+			block.rotateRight();
+			drawBlock(block, false);
+			return false;
+		}
+	}
+	
+	public boolean drawBlock(GameObject obj, boolean isNewBlock) {
+		synchronized(lock) {
+			boolean drawn = true;
+			Matrix m = obj.getShape();
+			ArrayList<Tile> changed = new ArrayList<>();
+			for (int r = 0; r < m.rows; r++) {
+				for (int c = 0; c < m.cols; c++) {
+					if (m.getCell(r, c) != null) {
+						int newRow = obj.getRow() + r;
+						int newCol = obj.getCol() + c;
+						if (newRow >= rows || newCol >= cols) {
+							drawn = false;
+							break;
+						}
+						Tile t = tiles.getCell(newRow, newCol);
+						if (t.getImage() == background) {
+							changed.add(t);
+							t.setImage(m.getCell(r, c).getImage());
+						} else {
+							drawn = false;
+							break;
+						}
+					}
+				}
+			}
+			if (drawn) {
+				return true;
+			} else {
+				if (isNewBlock) {
+					for (Tile t : changed) {
+						t.setImage(background);
+					}
+				}
+				return false;
+			}
+		}
+	}
+	
+	public void removeBlock(GameObject obj) {
+		synchronized(lock) {
+			Matrix m = obj.getShape();
+			for (int r = 0; r < m.rows; r++) {
+				for (int c = 0; c < m.cols; c++) {
+					if (m.getCell(r, c) != null) {
+						if (obj.getRow() + r < rows || obj.getCol() + c < cols) {
+							Tile t = tiles.getCell(obj.getRow() + r, obj.getCol() + c);
+							t.setImage(background);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
+	}
+}

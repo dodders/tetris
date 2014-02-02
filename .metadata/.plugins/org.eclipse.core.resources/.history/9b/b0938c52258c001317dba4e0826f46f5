@@ -1,0 +1,108 @@
+package com.gd.tetris;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Properties;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+	
+	//GridPane gridView = new GridPane();
+	ViewPane gridView;
+	BorderPane bp = new BorderPane();
+	Properties props = new Properties();
+	int rows;
+	int cols;
+	Controller controller;
+	
+	@Override
+	public void start(Stage primaryStage) throws IOException {
+		create();
+		primaryStage.setTitle("Tetris - JavaFX");
+		Scene scene = new Scene(bp);
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, controller);
+		scene.addEventHandler(KeyEvent.KEY_RELEASED, controller);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		new Thread(controller).start();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+		//Main m = new Main();
+		//m.go();
+	}
+	
+	public void go() {
+		
+	}
+		
+	public void create() throws IOException {
+		log("starting...");
+		Path p = FileSystems.getDefault().getPath("tetris.properties");
+		log(p.toAbsolutePath().toString());
+		InputStream is = Files.newInputStream(p, StandardOpenOption.READ);
+		props.load(is);
+		rows = Integer.parseInt(props.getProperty("height"));
+		cols = Integer.parseInt(props.getProperty("width"));
+		//set up screen
+		HBox main = new HBox();
+		VBox right = new VBox();
+		gridView = new ViewPane(rows, cols);
+		main.setSpacing(5);
+		main.getChildren().add(gridView);
+		main.getChildren().add(right);
+		main.setStyle("-fx-background-image: url('mainback.png'); -fx-background-repeat: tile;");
+		right.setSpacing(20);
+		right.setPadding(new Insets(5,15,25,5));
+		Image newBlock = new Image("newblock.png");
+		ImageView nbiv = new ImageView(newBlock);
+		right.getChildren().add(nbiv);
+		Image leveli = new Image("level.png");
+		ImageView leveliv = new ImageView(leveli);
+		right.getChildren().add(leveliv);
+		Image linesi = new Image("lines.png");
+		ImageView linesiv = new ImageView(linesi);
+		right.getChildren().add(linesiv);
+		Image scorei = new Image("score.png");
+		ImageView scoreiv = new ImageView(scorei);
+		right.getChildren().add(scoreiv);
+		HBox quitPause = new HBox();
+		quitPause.setSpacing(20);
+		right.getChildren().add(quitPause);
+		Image quiti = new Image("quit.png");
+		ImageView quitiv = new ImageView(quiti);
+		quitPause.getChildren().add(quitiv);
+		Image pausei = new Image("pause.png");
+		ImageView pauseiv = new ImageView(pausei);
+		quitPause.getChildren().add(pauseiv);
+		Image titlei = new Image("title.png");
+		ImageView titleiv = new ImageView(titlei);
+		right.getChildren().add(titleiv);
+
+		bp.setCenter(main);
+		gridView.setHgap(0);
+		gridView.setVgap(0);
+		controller = new Controller(gridView, rows, cols);
+	}
+	
+	private void log(String msg) {
+		System.out.println(msg);
+	}
+	
+}

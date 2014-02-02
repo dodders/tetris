@@ -1,8 +1,6 @@
 package com.gd.tetris.model;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import com.gd.tetris.model.Tile;
 
 public class BlockL extends GameObject {
 

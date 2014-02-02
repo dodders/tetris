@@ -23,7 +23,6 @@ import com.gd.tetris.model.Tile;
 
 public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 
-	//TilePane view;
 	ViewPane view;
 	Model model;
 	Rectangle r;
@@ -35,6 +34,7 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 	HashMap<KeyCode, Boolean> keys = new HashMap<>();
 	Map<KeyCode, Boolean> keyMap = Collections.synchronizedMap(keys);
 	DownTimer downTimer;
+	boolean finished = false;
 	
 	public Controller(ViewPane tp, int rows, int cols) {
 		this.view = tp;
@@ -57,14 +57,14 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 				ImageView iv = new ImageView();
 				Tile t = model.tiles.getCell(r, c);
 				iv.setImage(t.getImage());
-				iv.setFitHeight(20);
-				iv.setFitWidth(20);
+				iv.setFitHeight(25);
+				iv.setFitWidth(25);
 				iv.setCache(true);
 				view.add(iv, c, r);
 			}
 		}
 	}
-
+	
 	@Override
 	public void run() {
 		model.newBlock();
@@ -72,7 +72,15 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		t.start();
 		while(true) {
 			doKeys();
+			if (model.isFinished()) {
+				doFinished();
+				System.exit(0);
+			}
 		}
+	}
+	
+	private void doFinished() {
+		
 	}
 
 	private void doKeys() {
@@ -127,7 +135,11 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 		public void run() {
 			while(true) {
 				if (!m.blockDown()) {
-					m.newBlock();
+					boolean n = m.newBlock();
+					if (!n) {
+						model.setFinished(true);
+						return;
+					}
 				}
 				m.eraseFullRows();
 				try {
@@ -151,24 +163,6 @@ public class Controller implements Runnable, Observer, EventHandler<KeyEvent> {
 			ImageView iv = (ImageView)view.get(t.row, t.col);
 			iv.setImage(t.getImage());
 		}
-	}
-	
-	public class EraseRows implements Runnable {
-		List<Integer> rows;
-		Model m;
-		
-		public EraseRows(Model m, List<Integer> fullRows) {
-			this.m = m;
-			this.rows = fullRows;
-		}
-		
-		@Override
-		public void run() {
-			for (Integer i : rows) {
-				m.eraseFullRows();
-			}
-		}
-		
 	}
 	
 	@Override
